@@ -44,7 +44,7 @@ const cards = [
   },
   {
     title: "Video Production",
-    img: "/assets/foto-ServicePage/foto-video.png",
+    img: "/assets/foto-ServicePage/rev_fotoService/video.webp",
     alt: "Video Production",
     features: [
       "Video Company Profile",
@@ -54,7 +54,7 @@ const cards = [
   },
   {
     title: "Selebgram Management",
-    img: "/assets/foto-ServicePage/foto-selebgram.png",
+    img: "/assets/foto-ServicePage/rev_fotoService/selebgram.webp",
     alt: "Selebgram Management",
     features: ["Paid Promote", "Talent Photo/Video", "Affiliator Program"],
   },
@@ -66,7 +66,7 @@ const cards = [
   },
   {
     title: "Drone Footage",
-    img: "/assets/foto-ServicePage/foto-drone.png",
+    img: "/assets/foto-ServicePage/rev_fotoService/drone.webp",
     alt: "Commercial Photography",
     features: ["Photo & Video", "Dokumentasi", "Cinematic Drone Shot"],
   },
@@ -98,7 +98,7 @@ const cards = [
   },
   {
     title: "Free Human Resources Training",
-    img: "/assets/foto-ServicePage/foto-free.png",
+    img: "/assets/foto-ServicePage/rev_fotoService/human.webp",
     alt: "Free Human Resources Training",
     features: [
       "Training Digital Marketing",

@@ -40,11 +40,11 @@ const Home = () => {
   };
 
   const whoWeAreImages = [
-    "assets/foto-ProfilPage/kolase-1.png",
-    "assets/foto-ProfilPage/kolase-2.png",
+    "assets/foto-HomePage/fotoTim_rev/potrait.webp",
+    "assets/foto-HomePage/fotoTim_rev/landscape.webp",
     "assets/foto-ProfilPage/kolase-3.png",
-    "assets/foto-ProfilPage/kolase-4.png",
-    "assets/foto-ProfilPage/kolase-5.png",
+    "assets/foto-HomePage/fotoTim_rev/remote.webp",
+    "assets/foto-HomePage/fotoTim_rev/landscape2.webp",
     "assets/foto-ProfilPage/kolase-6.png",
   ];
 
@@ -227,7 +227,7 @@ const Home = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 lg:gap-10 items-start w-full">
               <div className="w-full">
                 <img
-                  src="assets/foto-HomePage/layanan.png"
+                  src="assets/foto-HomePage/fotoTim_rev/cover_layanan.webp"
                   alt="Consultation Service"
                   className="w-full h-64 sm:h-72 md:h-80 lg:h-90 object-cover rounded-xl shadow-lg ml-0 lg:ml-4 relative bottom-4"
                 />
@@ -235,7 +235,7 @@ const Home = () => {
               <div className="flex flex-col justify-center relative bottom-8">
                 <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">
                   OUR SERVICE
-                  
+
                 </h1>
                 <p className="text-base sm:text-lg md:text-xl mt-4 sm:mt-6">
                   - Sosial Media Manajemen <br />

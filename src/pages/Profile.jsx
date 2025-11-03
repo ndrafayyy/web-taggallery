@@ -68,12 +68,12 @@ const Profile = () => {
   // --- Daftar gambar untuk section 2 ---
   // Ganti URL ini dengan path gambar-gambarmu
   const whoWeAreImages = [
-    'assets/foto-ProfilPage/kolase-1.png', // Tim sedang berdiskusi
-    'assets/foto-ProfilPage/kolase-2.png', // Handshake
-    'assets/foto-ProfilPage/kolase-3.png', // Clapperboard film
-    'assets/foto-ProfilPage/kolase-4.png', // Tangan di tablet
-    'assets/foto-ProfilPage/kolase-5.png', // Tim di depan kamera
-    'assets/foto-ProfilPage/kolase-6.png'  // Tim di depan laptop
+    'assets/foto-ProfilPage/rev_section2/fotoPotrait.webp', // Tim sedang berdiskusi
+    'assets/foto-ProfilPage/rev_section2/fotoLandscape1.webp',
+    'assets/foto-ProfilPage/rev_section2/fotoKecil1.webp', // Clapperboard film
+    'assets/foto-ProfilPage/rev_section2/fotoLandscape4.webp', // Tangan di tablet
+    'assets/foto-ProfilPage/rev_section2/fotoLandscape3.webp', // Tim di depan kamera
+    'assets/foto-ProfilPage/rev_section2/fotoLandscape2.webp',
   ];
 
   // Komponen kecil untuk kotak gambar agar kode tidak berulang
