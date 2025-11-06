@@ -145,16 +145,30 @@ function CreatePost() {
         {/* Header */}
         <header className="sticky top-0 left-0 w-full bg-white bg-opacity-95 backdrop-blur-sm border-b border-gray-200 z-10">
           <div className="max-w-4xl mx-auto px-4">
-            <div className="flex justify-between items-center py-3">
+            
+            {/* --- GANTI BAGIAN INI --- */}
+            <div className="flex justify-end items-center gap-4 py-3">
+              {/* Tombol Cancel Baru */}
               <button
+              type="button" 
+              onClick={() => navigate('/admin')} // Kembali ke halaman admin
+              className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
+              >
+                Cancel
+                </button>
+                
+                {/* Tombol Publish Lama */}
+                <button
                 onClick={handleSubmit}
                 className="bg-[rgba(144,0,22,0.8)] text-white text-sm rounded-full px-4 py-1.5 hover:bg-green-700 transition-colors"
-              >
-                Publish
-              </button>
-            </div>
-          </div>
-        </header>
+                >
+                  Publish
+                  </button>
+                  </div>
+                  {/* --- AKHIR PERUBAHAN --- */}
+                  
+                  </div>
+                  </header>
 
         {/* Main */}
         <main className="max-w-3xl mx-auto px-4 py-8">

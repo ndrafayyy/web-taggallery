@@ -4,6 +4,8 @@ import axios from 'axios';
 import { Toaster, toast } from 'react-hot-toast';
 import { Plus, Edit, Trash2 } from 'lucide-react';
 import { UserButton } from '@clerk/clerk-react';
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 function AdminDashboard() {
   const [blogs, setBlogs] = useState([]);
@@ -22,6 +24,15 @@ function AdminDashboard() {
     };
     fetchBlogs();
   }, []);
+
+  useEffect(() => {
+  AOS.init({
+    duration: 800,       
+    once: true,         
+    easing: "ease-in-out",
+  });
+}, []);
+
 
   const renderContentPreview = (content) => {
     try {
@@ -62,7 +73,9 @@ function AdminDashboard() {
         <div className="max-w-7xl mx-auto">
 
           {/* Header */}
-          <div className="flex justify-between items-center mb-8">
+          <div className="flex justify-between items-center mb-8"
+          data-aos="fade-down"
+          >
             <h1 className="text-3xl font-bold text-gray-800">From the Blog</h1>
             <div className="flex items-center gap-4">
               <Link
@@ -81,13 +94,14 @@ function AdminDashboard() {
             {blogs.map((blog) => (
               <div
                 key={blog.id}
+                data-aos="fade-up"
                 className="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col transition-all duration-300 hover:shadow-2xl hover:-translate-y-1"
               >
                 {blog.banner && (
                   <img
-                    src={`${apiUrl}/storage/${blog.banner}`}
-                    alt="Banner"
-                    className="w-full h-48 object-cover"
+                  src={blog.banner_url || '/assets/placeholder-banner.jpg'}
+                  alt="Banner"
+                  className="w-full h-48 object-cover"
                   />
                 )}
                 <div className="p-6 flex flex-col flex-grow">

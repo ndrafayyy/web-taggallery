@@ -89,32 +89,35 @@ function Articles() {
           data-aos="fade-up"
         >
           {filteredBlogs.map((blog, index) => (
-            <div
-              key={blog.id}
-              className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col"
-              data-aos="zoom-in"
+            <Link
+            to={`/artikel/${blog.slug}`}
+            key={blog.id}
+            className="block h-full" 
+            data-aos="zoom-in"
             >
-              <img
-                src={`${import.meta.env.VITE_API_BASE_URL}/storage/${
-                  blog.banner
-                }`}
+              <div
+              className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 h-full"
+              >
+                <img
+                src={blog.banner_url || '/assets/placeholder-banner.jpg'}
                 alt={blog.title}
                 className="w-full h-48 object-cover"
-              />
-              <div className="p-6 flex flex-col flex-grow">
-                <h2 className="text-xl font-bold mb-2">{blog.title}</h2>
-                <p className="text-gray-600 text-sm mb-4 flex-grow line-clamp-3">
-                  {createPreview(blog.content)}
-                </p>
-                <Link
-                  to={`/artikel/${blog.slug}`}
-                  className="text-red-600 hover:underline font-semibold mt-auto"
-                >
-                  Read More
-                </Link>
-              </div>
-            </div>
-          ))}
+                />
+                <div className="p-6 flex flex-col flex-grow">
+                  <h2 className="text-xl font-bold mb-2">{blog.title}</h2>
+                  <p className="text-gray-600 text-sm mb-4 flex-grow line-clamp-3">
+                    {createPreview(blog.content)}
+                    </p>
+                    
+                    <span
+                    className="text-red-600 hover:underline font-semibold mt-auto"
+                    >
+                      Read More
+                    </span>
+                  </div>
+                </div>
+              </Link>
+            ))}
         </div>
 
         {/* Empty State */}

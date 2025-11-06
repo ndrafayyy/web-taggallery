@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import { Toaster, toast } from 'react-hot-toast';
+import { ArrowLeft } from "lucide-react";
 
 function formatDate(dateString) {
   if (!dateString) return 'Date not available';
@@ -191,17 +192,22 @@ function BlogDetail() {
         {/* Header */}
         <header className="border-b bg-white">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-            <Link to="/admin" className="text-black hover:text-gray-900">
-              Back to Home
-            </Link>
             <Link
-              to={`/edit/${blog.id}`}
-              className="bg-[rgba(144,0,22,0.8)] text-white text-sm rounded-full px-4 py-1.5 hover:bg-gray-300 transition-colors"
+              to="/admin"
+              className="text-sm flex items-center gap-2 text-gray-700 hover:text-[rgba(144,0,22,1)] font-medium transition"
             >
-              Edit Post
-            </Link>
-          </div>
-        </header>
+              <ArrowLeft size={16} />
+              Back to Dashboard
+              </Link>
+              
+              <Link
+                to={`/edit/${blog.id}`}
+                className="bg-[rgba(144,0,22,0.8)] text-white text-sm rounded-full px-4 py-1.5 hover:bg-[rgba(144,0,22,1)] transition-colors"
+              >
+                Edit Post
+              </Link>
+            </div>
+          </header>
 
         {/* Main Content */}
         <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">

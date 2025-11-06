@@ -139,12 +139,14 @@ function EditPost() {
       formData.append('content', JSON.stringify(editorData));
       if (bannerImage) formData.append('banner', bannerImage);
 
+      // --- Perhatikan di sini, kita pakai POST tapi tambahkan method PUT ---
+      // Ini adalah cara standar untuk mengirim FormData dengan method PUT
       const res = await axios.post(`${apiUrl}/api/blogs/${id}?_method=PUT`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
 
       toast.success('Blog updated successfully!');
-      navigate(`/blog/${res.data.slug}`);
+      navigate(`/admin`); // <-- Diarahkan ke /admin setelah update
     } catch (error) {
       console.error('Update error:', error.response?.data || error.message);
       toast.error(
@@ -162,13 +164,25 @@ function EditPost() {
   };
 
   return (
-    <div className="bg-white min-h-screen">
+    <div className="pt-15 bg-white min-h-screen">
       <Toaster position="top-center" />
 
       {/* Header */}
       <header className="sticky top-0 left-0 w-full bg-white bg-opacity-95 backdrop-blur-sm border-b border-gray-200 z-50">
         <div className="max-w-4xl mx-auto px-4">
-          <div className="flex justify-between items-center py-3">
+          
+          {/* --- KODE HEADER DIPERBARUI --- */}
+          <div className="flex justify-end items-center gap-4 py-3">
+            {/* Tombol Cancel Baru */}
+            <button
+              type="button" 
+              onClick={() => navigate('/admin')} // Kembali ke halaman admin
+              className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
+            >
+              Cancel
+            </button>
+            
+            {/* Tombol Update Lama */}
             <button
               onClick={handleUpdate}
               className="bg-green-600 text-white text-sm rounded-full px-4 py-1.5 hover:bg-green-700 transition-colors"
@@ -176,6 +190,8 @@ function EditPost() {
               Update
             </button>
           </div>
+          {/* --- AKHIR PERUBAHAN HEADER --- */}
+
         </div>
       </header>
 

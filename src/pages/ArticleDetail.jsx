@@ -3,7 +3,10 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import LatestArticles from '../components/LatestArticles';
 import ServiceList from '../components/ServiceList';
+import { Calendar } from 'lucide-react';
+import { motion } from 'framer-motion'; // Import framer-motion
 
+// --- Fungsi renderContent (Sudah benar dengan lazy load & styling) ---
 function renderContent(content) {
   try {
     const parsedContent = typeof content === 'string' ? JSON.parse(content) : content;
@@ -23,7 +26,6 @@ function renderContent(content) {
             />
           );
         }
-
         case 'paragraph':
           return (
             <p
@@ -32,59 +34,23 @@ function renderContent(content) {
               dangerouslySetInnerHTML={{ __html: block.data.text }}
             />
           );
-
+        
+        // ... (case 'list' dan 'quote' kamu tetap sama) ...
         case 'list': {
           const style = block.data.style;
-
-          // ✅ Checklist
-          if (style === 'checklist') {
-            return (
-              <div key={index} className="my-4">
-                {block.data.items.map((item, i) => (
-                  <div key={i} className="flex items-start mb-2">
-                    <input
-                      type="checkbox"
-                      checked={item.meta.checked}
-                      readOnly
-                      className="h-5 w-5 mt-1 mr-3 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                    />
-                    <span
-                      className={
-                        item.meta.checked
-                          ? 'line-through text-white-500'
-                          : 'text-white-800'
-                      }
-                    >
-                      {item.content}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            );
-          }
-
-          // ✅ Ordered / Unordered List
+          
           const listItems = block.data.items.map((item, i) => (
             <li key={i} dangerouslySetInnerHTML={{ __html: item.content }} />
           ));
 
           if (style === 'ordered') {
             const typeMap = {
-              'lower-roman': 'i',
-              'upper-roman': 'I',
-              'lower-alpha': 'a',
-              'upper-alpha': 'A',
+              'lower-roman': 'i', 'upper-roman': 'I',
+              'lower-alpha': 'a', 'upper-alpha': 'A',
             };
             const listType = typeMap[block.data.meta.counterType] || '1';
-
             return (
-              <ol
-                key={index}
-                type={listType}
-                style={{ listStyleType: block.data.meta.counterType }}
-                start={block.data.meta.start}
-                className="pl-5 mb-2"
-              >
+              <ol key={index} type={listType} style={{ listStyleType: block.data.meta.counterType }} start={block.data.meta.start} className="pl-5 mb-2">
                 {listItems}
               </ol>
             );
@@ -96,7 +62,6 @@ function renderContent(content) {
             );
           }
         }
-
         case 'quote':
           return (
             <blockquote key={index} className="border-l-4 border-gray-300 pl-4">
@@ -109,28 +74,33 @@ function renderContent(content) {
           );
 
         case 'image': {
-          const caption =
-            block.data.caption ||
-            block.data.file?.caption ||
-            block.data.text ||
-            '';
+          const caption = block.data.caption || block.data.file?.caption || block.data.text || '';
+          const imageClasses = ['rounded-lg', 'shadow-md']; 
 
+          if (block.data.withBackground) imageClasses.push('bg-gray-100', 'p-4');
+          if (block.data.withBorder) imageClasses.push('border', 'border-gray-300');
+          
+          if (block.data.stretched) {
+            imageClasses.push('w-full', 'max-w-full');
+          } else {
+            imageClasses.push('block', 'max-w-xl', 'mx-auto');
+          }
           return (
             <figure key={index} className="my-6">
               <img
                 src={block.data.file?.url}
                 alt={caption || `Image-${index}`}
-                className="rounded-lg shadow-md"
+                className={imageClasses.join(' ')} 
+                loading="lazy" // <-- Lazy load
               />
               {caption && (
-                <figcaption className="text-sm text-white-400 mt-2 italic">
+                <figcaption className="text-sm text-white-400 mt-2 italic text-center">
                   {caption}
                 </figcaption>
               )}
             </figure>
           );
         }
-
         default:
           return null;
       }
@@ -140,14 +110,11 @@ function renderContent(content) {
   }
 }
 
+// --- Fungsi formatDate
 function formatDate(dateString) {
-  if (!dateString) {
-    return 'Date not available';
-  }
+  if (!dateString) return 'Date not available';
   const date = new Date(dateString);
-  if (isNaN(date.getTime())) {
-    return 'Invalid Date';
-  }
+  if (isNaN(date.getTime())) return 'Invalid Date';
   const options = { year: 'numeric', month: 'long', day: 'numeric' };
   return date.toLocaleDateString('id-ID', options);
 }
@@ -159,14 +126,27 @@ const ArticleDetail = () => {
   const [allBlogs, setAllBlogs] = useState([]);
   const apiUrl = import.meta.env.VITE_API_BASE_URL;
 
+  // Definisi Animasi
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { 
+        duration: 0.5,
+        ease: "easeInOut"
+      }
+    }
+  };
+
   useEffect(() => {
     const fetchBlog = async () => {
       try {
         const { data } = await axios.get(`${apiUrl}/api/blogs/slug/${slug}`);
         setBlog(data);
-
         const allBlogsRes = await axios.get(`${apiUrl}/api/blogs`);
-        setAllBlogs(allBlogsRes.data);
+        setAllBlogs(allBlogsRes.data); 
+
       } catch (error) {
         console.error('Error fetching blog:', error);
       } finally {
@@ -177,19 +157,11 @@ const ArticleDetail = () => {
   }, [slug]);
 
   if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        Loading...
-      </div>
-    );
+    return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
   }
 
   if (!blog) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        Artikel tidak ditemukan.
-      </div>
-    );
+    return <div className="min-h-screen flex items-center justify-center">Artikel tidak ditemukan.</div>;
   }
 
   return (
@@ -208,40 +180,69 @@ const ArticleDetail = () => {
         <div className="relative max-w-7xl mx-auto lg:flex lg:gap-12">
           {/* --- Left Section (Main Content) --- */}
           <div className="lg:w-2/3 lg:pr-20 lg:border-r lg:border-white/50">
-            {/* Title & Date */}
-            <div className="mb-8">
+            
+            {/* Title & Date (Dengan Animasi) */}
+            <motion.div 
+              className="mb-8"
+              variants={fadeInUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }} 
+            >
               <h1 className="text-4xl md:text-5xl font-bold mb-2">
                 {blog.title}
               </h1>
-              <p className="text-md text-bold underline">
-                {formatDate(
-                  blog.updated_at ||
-                    blog.updatedAt ||
-                    blog.created_at ||
-                    blog.createdAt
-                )}
-              </p>
-            </div>
+              <div className="flex items-center text-md text-white/70 mt-2">
+                <Calendar size={16} className="mr-2 opacity-80" />
+                <span>
+                  {formatDate(
+                    blog.updated_at || blog.updatedAt ||
+                    blog.created_at || blog.createdAt
+                  )}
+                </span>
+              </div>
+            </motion.div>
 
-            {/* Banner Image */}
-            <img
-              src={blog.banner_url || `${apiUrl}/storage/${blog.banner}`}
+            {/* Banner Image (Dengan Animasi & Lazy Load) */}
+            <motion.img
+              src={blog.banner_url || `${apiUrl}/api/storage/${blog.banner}`}
               alt={blog.title}
+              loading="lazy" // <-- Lazy load
+              className="w-full rounded-lg shadow-lg" 
+              variants={fadeInUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
             />
 
-            {/* Article Content */}
-            <div className="article-content">{renderContent(blog.content)}</div>
+            {/* Article Content (Dengan Animasi) */}
+            <motion.div 
+              className="article-content mt-8"
+              variants={fadeInUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+            >
+              {renderContent(blog.content)}
+            </motion.div>
           </div>
 
-          {/* --- Right Section (Sidebar) --- */}
-          <div className="lg:w-1/3 mt-12 lg:mt-0">
+          {/* --- Right Section (Sidebar) (Dengan Animasi) --- */}
+          <motion.div 
+            className="lg:w-1/3 mt-12 lg:mt-0"
+            variants={fadeInUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+          >
             <div className="lg:sticky top-28 h-fit">
               {allBlogs.length > 1 && (
                 <LatestArticles articles={allBlogs} currentArticleId={blog.id} />
               )}
               <ServiceList />
             </div>
-          </div>
+          </motion.div>
+
         </div>
       </div>
     </div>
@@ -249,3 +250,4 @@ const ArticleDetail = () => {
 };
 
 export default ArticleDetail;
+

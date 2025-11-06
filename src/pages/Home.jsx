@@ -361,38 +361,38 @@ const Home = () => {
               data-aos-delay="500"
             >
               {latestArticles.map((article, index) => (
-                <div
-                  key={article._id}
-                  className="flex space-x-3 sm:space-x-4 items-start"
-                  data-aos="slide-up"
-                  data-aos-delay={200 + index * 100}
+                <Link 
+                to={`/artikel/${article.slug}`}
+                key={article._id}
+                className="flex space-x-3 sm:space-x-4 items-start" 
+                data-aos="slide-up"
+                data-aos-delay={200 + index * 100}
                 >
+                  
                   <img
-                    src={
-                      article.banner
-                        ? `${import.meta.env.VITE_API_BASE_URL}/storage/${
-                            article.banner
-                          }`
-                        : "/assets/placeholder-banner.jpg"
-                    }
-                    alt={article.title}
-                    className="w-40 sm:w-48 md:w-52 lg:w-58 h-24 sm:h-28 md:h-32 lg:h-34 object-cover rounded-lg flex-shrink-0"
+                  src={
+                    article.banner_url
+                    ? article.banner_url
+                    : "/assets/placeholder-banner.jpg"
+                  }
+                  alt={article.title}
+                  className="w-40 sm:w-48 md:w-52 lg:w-58 h-24 sm:h-28 md:h-32 lg:h-34 object-cover rounded-lg flex-shrink-0"
                   />
                   <div className="flex-1">
                     <h3 className="text-lg sm:text-xl md:text-2xl font-semibold text-white line-clamp-2">
                       {article.title}
-                    </h3>
-                    <p className="text-sm sm:text-base md:text-lg mt-1 text-gray-300 line-clamp-2">
-                      {createPreview(article.content)}
-                    </p>
-                    <Link
-                      to={`/artikel/${article.slug}`}
-                      className="text-sm mt-1 text-white hover:text-zinc-400 transition duration-300"
-                    >
-                      Read More...
-                    </Link>
-                  </div>
-                </div>
+                      </h3>
+                      <p className="text-sm sm:text-base md:text-lg mt-1 text-gray-300 line-clamp-2">
+                        {createPreview(article.content)}
+                        </p>
+                        
+                        <span
+                        className="text-sm mt-1 text-white hover:text-zinc-400 transition duration-300"
+                        >
+                          Read More...
+                      </span>
+                    </div>
+                </Link>
               ))}
             </div>
           </div>
