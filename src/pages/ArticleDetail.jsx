@@ -165,8 +165,7 @@ const ArticleDetail = () => {
   }
 
   return (
-    <div className="relative w-full max-w-[1440px] mx-auto bg-[#8a0000] text-white flex flex-col justify-center p-8 md:p-0">
-      {/* Background Element */}
+    <div className="relative w-full bg-[#8a0000] text-white flex flex-col justify-center p-8 md:p-0">      {/* Background Element */}
       <div className="overflow-hidden absolute top-0 right-0 w-full h-full z-[1]">
         <img
           src="/assets/foto-ServicePage/bg-kanan-atas.png"
