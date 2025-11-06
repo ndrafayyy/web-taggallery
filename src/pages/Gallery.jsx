@@ -1,10 +1,10 @@
-import React from 'react'
-import OurWorksGallery from '../components/OurWorksGallery'
+import React from "react";
+import OurWorksGallery from "../components/OurWorksGallery";
 
 const Gallery = () => {
   return (
     <div>
-     <style>
+      <style>
         {`
           html, body {
             margin: 0;
@@ -16,11 +16,14 @@ const Gallery = () => {
           }
         `}
       </style>
-    <div className='className="min-h-[1440px] bg-gradient-to-br from-[#4B0000] to-[#B30000] overflow-hidden">'>
-      <OurWorksGallery />
+      <div
+        className='className="min-h-[1440px] bg-gradient-to-br from-[#4B0000] to-[#B30000] overflow-hidden"'
+        data-aos="fade-in"
+      >
+        <OurWorksGallery data-aos="fade-up" />
+      </div>
     </div>
-    </div>
-  )
-}
+  );
+};
 
-export default Gallery
+export default Gallery;

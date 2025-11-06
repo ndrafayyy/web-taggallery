@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
 
 function Articles() {
   const [blogs, setBlogs] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const [filteredBlogs, setFilteredBlogs] = useState([]);
 
   useEffect(() => {
@@ -14,7 +14,7 @@ function Articles() {
         const res = await axios.get(`${apiUrl}/api/blogs`);
         setBlogs(res.data);
       } catch (error) {
-        console.error('Error fetching blogs:', error);
+        console.error("Error fetching blogs:", error);
       }
     };
     fetchBlogs();
@@ -33,22 +33,22 @@ function Articles() {
 
       // Cari blok pertama yang merupakan paragraf atau header
       const textBlock = parsed.blocks.find(
-        (block) => block.type === 'paragraph' || block.type === 'header'
+        (block) => block.type === "paragraph" || block.type === "header"
       );
 
-      if (!textBlock) return '';
+      if (!textBlock) return "";
 
       // Hapus tag HTML dari teks
-      const tempDiv = document.createElement('div');
+      const tempDiv = document.createElement("div");
       tempDiv.innerHTML = textBlock.data.text;
-      const plainText = tempDiv.textContent || tempDiv.innerText || '';
+      const plainText = tempDiv.textContent || tempDiv.innerText || "";
 
       // Batasi maksimal 150 karakter
       return plainText.length > 150
-        ? plainText.substring(0, 150) + '...'
+        ? plainText.substring(0, 150) + "..."
         : plainText;
     } catch {
-      return 'No preview available';
+      return "No preview available";
     }
   };
 
@@ -69,7 +69,10 @@ function Articles() {
 
       <div className="max-w-7xl mx-auto">
         {/* Header & Search */}
-        <div className="flex justify-between items-center mb-8">
+        <div
+          className="flex justify-between items-center mb-8"
+          data-aos="fade-down"
+        >
           <h1 className="text-4xl font-bold text-white mb-8">Semua Artikel</h1>
           <input
             type="search"
@@ -81,14 +84,20 @@ function Articles() {
         </div>
 
         {/* Articles Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredBlogs.map((blog) => (
+        <div
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          data-aos="fade-up"
+        >
+          {filteredBlogs.map((blog, index) => (
             <div
               key={blog.id}
               className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col"
+              data-aos="zoom-in"
             >
               <img
-                src={`${import.meta.env.VITE_API_BASE_URL}/storage/${blog.banner}`}
+                src={`${import.meta.env.VITE_API_BASE_URL}/storage/${
+                  blog.banner
+                }`}
                 alt={blog.title}
                 className="w-full h-48 object-cover"
               />

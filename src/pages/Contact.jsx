@@ -87,15 +87,16 @@ const Contact = () => {
         <div
           className="w-full h-screen text-white bg-cover bg-center"
           style={{ backgroundImage: "url('/assets/bg-page/bg-5-home.png')" }}
+          data-aos="fade-up"
         >
           <div className="w-full max-w-[1200px] h-full mx-auto flex items-center justify-center px-4">
             <div className="my-auto">
-              <h1 className="text-[48px] font-bold mb-4 text-center">
+              <h1 className="text-[48px] font-bold mb-4 text-center" data-aos="fade-down">
                 Frequently Asked Questions
               </h1>
               <div className="flex flex-col gap-10 w-full mx-auto">
                 {faqs.map((faq, index) => (
-                  <div key={index}>
+                  <div key={index} data-aos="fade-up" data-aos-delay={index * 100}>
                     <div
                       className="bg-[#FF0000] rounded-md px-4 py-2 font-semibold text-lg cursor-pointer hover:bg-red-700 transition-colors"
                       onClick={() => toggleFAQ(index)}
@@ -146,7 +147,7 @@ const Contact = () => {
         {/* Section 2 Konten utama */}
         <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
           {/* Section Kiri: Formulir Kontak */}
-          <div className="col-span-1 p-4 w-full">
+          <div className="col-span-1 p-4 w-full" data-aos="fade-right">
             <h1 className="text-base sm:text-lg font-semibold mb-2">
               Nama Lengkap
             </h1>
@@ -218,7 +219,7 @@ const Contact = () => {
           </div>
 
           {/* Section Tengah: Live Chat dan Social Media */}
-          <div className="flex flex-col space-y-3.5 pt-4 sm:pt-6 lg:pt-7 mx-4 sm:mx-4 lg:mx-18 w-full">
+          <div className="flex flex-col space-y-3.5 pt-4 sm:pt-6 lg:pt-7 mx-4 sm:mx-4 lg:mx-18 w-full" data-aos="fade-up">
             <div className="flex flex-col">
               <i className="ri-whatsapp-line text-3xl sm:text-4xl"></i>
               <h2 className="text-base sm:text-lg font-semibold">
@@ -280,7 +281,7 @@ const Contact = () => {
           </div>
 
           {/* Section Kanan: Get in touch */}
-          <div className="col-span-1 p-0 flex overflow-hidden items-center w-full z-11 sm:flex-row sm:items-center flex-col mb-10 sm:mb-0 md:pt-20 lg:pt-2">
+          <div className="col-span-1 p-0 flex overflow-hidden items-center w-full z-11 sm:flex-row sm:items-center flex-col mb-10 sm:mb-0 md:pt-20 lg:pt-2" data-aos="fade-left">
             <img
               src="/assets/foto-ContactPage/foto-bgCC.jpg"
               className="absolute sm:w-[300px] md:w-[400px] lg:w-[440px] sm:h-[300px] md:h-[300px] lg:h-[380px] w-full h-[200px] object-cover rounded-lg sm:-mr-6 md:mr-88 lg:-mr-11 brightness-60 sm:absolute sm:right-0"
